@@ -1,6 +1,5 @@
 def origem():
   origem = ['Brasil', 'Canadá', 'França', 'Japão', 'Singapura', 'Zimbabue']
-    # primeira linha //precisa deixar a primeira posição vazia, pois não há valor para ela - matriz[0,0]
   return origem
 
 def destino():
@@ -29,7 +28,6 @@ def destino():
                'Tunísia',
                'Uruguai',
                'Zimbabue ']
-    # primeira coluna//precisa deixar a primeira posição vazia, pois não há valor para ela - matriz[0,0]
   return destino
 
   
@@ -56,7 +54,6 @@ def capacidade():
                   5300,
                   3900,
                   3600]
-    # ultima linha
   return capacidade
 
 
@@ -86,6 +83,5 @@ def necessidade():
                    1907,
                    1908,
                    666]
-    # ultima coluna
   return necessidade
 

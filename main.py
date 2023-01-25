@@ -5,47 +5,51 @@ matriz = []
 matriz = dados.matriz()
 
 
-#calcular necessidade e disponibilidade
+# calcular necessidade e disponibilidade
 def necessidade():
-    total = 0
     necessidade = []
     necessidade = dados.necessidade()
-    total = sum(necessidade)
-    return total
-
-
-#####print("necessidade = ", necessidade())
+    return necessidade
 
 def disponibilidade():
-    total = 0
     disp = []
     disp = dados.capacidade()
-    total = sum(disp)
+    return disp
+
+def total_necessidade():
+    total = 0
+    total = sum(necessidade())
     return total
 
-#####print("disponibilidade = ", disponibilidade())
+def total_disp():
+    total = 0
+    total = sum(disponibilidade())
+    return total
 
-#verificar necessidade do dummy
-def verifica_necessidade_dummy():
-    dummy = necessidade() - disponibilidade()
-    if(dummy != 0):
-        return True
+def verifica_dummy():
+    dummy = total_necessidade() - total_disp()
+    if (dummy != 0):
+        a = 0
+        for a in range(len(matriz)):
+                matriz[a].append(9999)
+        return matriz
     else:
         return False
 
-#####print(verifica_necessidade_dummy())
+def add_disponibilidade():
+    disp = []
+    disp = disponibilidade()
+    for i in range(len(matriz)):
+        matriz[i].append(disp[i])
+    return matriz
 
-
-#função que insere dummy
-def dummy():
-    if (verifica_necessidade_dummy()):
-        a = 0
-        for a in range(len(matriz)):
-            matriz[a].append(9999)
+def add_necessidade():
+    matriz.append(necessidade())
     return matriz
 
 
-#função que calcula as penalidades
+
+# função que calcula as penalidades
 def penalidades_linha():
     m_penal = []
     for a in range(len(matriz)):
@@ -59,28 +63,26 @@ def penalidades_linha():
     return m_penal
 
 
-#####print(penalidades_linha())
+#print(penalidades_linha())
 
-
-#precisa pegar penalidades das colunas, iterar sobre cada coluna, e de cada coluna, os valores de todas as linhas
 def penalidades_coluna():
-    m_penal = []
-    l_nums_colunas = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
+    result = []  # lista para armazenar as penalidades das colunas
+    for i in range(len(matriz[0])):
+        col = [linha[i] for linha in matriz]  # pega os valores da coluna atual
+        two_smallest = hpq.nsmallest(2, col) # pega os dois menores valores
+        difference = round(two_smallest[1] - two_smallest[0], 2)
+        result.append(difference) 
 
-    for i in range(len(matriz)):
-        for j in range(len(matriz[i])):
-            l_nums_colunas[j].append(matriz[i][j])
-
-    print(l_nums_colunas)
-
-    for a in range(len(matriz)):
-        menores_nums = 0
-        menores_nums = hpq.nsmallest(2, matriz[a][a])
-        m1 = menores_nums[0]
-        m2 = menores_nums[1]
-        penalidade = m2 - m1
-        m_penal.append(penalidade)
-    return m_penal
+    return result
 
 
-penalidades_coluna()
+#print(penalidades_coluna())
+
+
+def main():
+    verifica_dummy()
+    add_disponibilidade()
+    add_necessidade()
+    print(matriz)
+
+main()
